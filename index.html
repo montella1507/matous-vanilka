@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--
+      Need a visual blank slate?
+      Remove all code in `styles.css`!
+    -->
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <div class="logo-container">
+      <img id="logo" src="assets/images/logo.svg" />
+    </div>
+    <div class="texts">
+      <ng-container *ngFor="let image of images; let index = index">
+        <div
+          class="text"
+          [ngStyle]="{
+                'width': image.width,
+
+                 }"
+        >
+          <h1>{{ image.text }}</h1>
+          <h2>{{ image.text2 }}</h2>
+        </div>
+      </ng-container>
+    </div>
+    <div class="image-container">
+      <div class="slides" #slides>
+        <ng-container *ngFor="let image of images; let index = index">
+          <div
+            class="image-box"
+            [ngStyle]="{
+                'width': image.width,
+
+                 }"
+          >
+            <div
+              [ngStyle]="{
+                    '--x': x+'px',
+                    '--y': y+'px',
+                    'background-image': 'url(' + image.overlay + ')'
+                 }"
+              class="normal"
+            >
+              <div
+                #el
+                [ngStyle]="{
+                    '--x': 'calc('+x+'px  -  ' + getPreviousWidth(el) +'px)',
+                    '--y': 'calc('+y+'px - '+slides.getClientRects()[0].top + 'px)',
+                    'background-image': 'url(' + image.normal + ')'
+                 }"
+                class="overlay"
+              ></div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="texts">
+        <ng-container *ngFor="let image of images; let index = index">
+          <div
+            class="text"
+            [ngStyle]="{
+                'width': image.width,
+
+                 }"
+          >
+            <h1>{{ image.text3 }}</h1>
+            <h2>{{ image.text4 }}</h2>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div
+      (panstart)="onPanStart($event)"
+      (panmove)="onPan($event)"
+      id="lens"
+      [ngStyle]="{
+         '--boxShadow':boxShadow,
+                    '--x': x+'px',
+                    '--y': y+'px'
+                 }"
+    ></div>
+  </body>
+</html>
